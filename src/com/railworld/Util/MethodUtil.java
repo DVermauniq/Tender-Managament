@@ -43,7 +43,7 @@ public class MethodUtil {
     public boolean LogInVendor() throws SQLException {
         Scanner sc = new Scanner(System.in);
         System.out.println("--------------------------------");
-        System.out.println("Enter the ID here:-");
+        //System.out.println("Enter the ID here:-");
         int id = sc.nextInt();
 
         try {
@@ -69,6 +69,7 @@ public class MethodUtil {
         String name = sc.nextLine();
         System.out.println("Enter a mobile number here:-");
         int mobile = sc.nextInt();
+        sc.nextLine();
         System.out.println("Enter a email here:-");
         String email = sc.nextLine();
         System.out.println("Enter a address here:-");
@@ -156,10 +157,10 @@ public class MethodUtil {
         Scanner sc = new Scanner(System.in);
         System.out.println("--------------------------------");
         System.out.println("Enter the tender ID here :-");
-        int tid = sc.nextInt();
+        int tenId = sc.nextInt();
 
         try {
-            List<Bidder> bidders = bd.viewAllBidsOfTender(tid);
+            List<Bidder> bidders = bd.viewAllBidsOfTender(tenId);
             System.out.println();
             System.out.println();
             System.out.println();
@@ -175,14 +176,15 @@ public class MethodUtil {
     public void AssignTenderToVendor() throws SQLException {
         Scanner sc = new Scanner(System.in);
         System.out.println("--------------------------------");
-        System.out.println("Enter the Vendor ID here :-");
-        int vid = sc.nextInt();
         System.out.println("Enter the Tender ID here :-");
-        int tid = sc.nextInt();
+        int tenId = sc.nextInt();
+        System.out.println("Enter the Vendor ID here :-");
+        int venId = sc.nextInt();
+
 
 
         try {
-            String result = td.assignTenderToVendor(vid, tid);
+            String result = td.assignTenderToVendor(venId, tenId);
             System.out.println();
             System.out.println();
             System.out.println();
@@ -213,16 +215,18 @@ public class MethodUtil {
     public void PlaceBidAgainstTender() throws SQLException {
         Scanner sc = new Scanner(System.in);
         System.out.println("--------------------------------");
+        System.out.println("Enter the Bidder ID  here:-");
+        int id = sc.nextInt();
         System.out.println("Enter the Vendor ID  here:-");
         int venId = sc.nextInt();
         System.out.println("Enter the Tender ID  here:-");
         int tenId = sc.nextInt();
         System.out.println("Enter the Bidding price here:-");
-        int bPrice = sc.nextInt();
+        int price = sc.nextInt();
         sc.nextLine();
 
         try {
-            String result = bd.placeBidAgainstTender(venId, tenId, bPrice);
+            String result = bd.placeBidAgainstTender(id,venId, tenId, price);
             System.out.println();
             System.out.println();
             System.out.println(result);
@@ -236,7 +240,7 @@ public class MethodUtil {
     public void ViewStatusOfBid() throws SQLException {
         Scanner sc = new Scanner(System.in);
         System.out.println("--------------------------------");
-        System.out.println("Enter the Bid S. No. here:-");
+        System.out.println("Enter the Bid id here:-");
         int id = sc.nextInt();
 
         try {
