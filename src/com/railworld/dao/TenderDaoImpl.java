@@ -25,16 +25,16 @@ public class TenderDaoImpl implements TenderDao {
 
         List<Tender> tenders = new ArrayList<>();
 
-        PreparedStatement ps = this.con.prepareStatement("select * from tender");
+        PreparedStatement ps = this.con.prepareStatement("select * from Tender");
 
         ResultSet rs = ps.executeQuery();
 
         while (rs.next()) {
-            int i = rs.getInt("tId");
-            String n = rs.getString("tName");
-            String t = rs.getString("tType");
-            int p = rs.getInt("tPrice");
-            String l = rs.getString("tLocation");
+            int i = rs.getInt("id");
+            String n = rs.getString("name");
+            String t = rs.getString("type");
+            int p = rs.getInt("price");
+            String l = rs.getString("location");
 
             tenders.add(new Tender(i, n, t, p, l));
         }
@@ -47,18 +47,18 @@ public class TenderDaoImpl implements TenderDao {
     }
 
     @Override
-    public String createTender(int tId, String tName, String tType, int tPrice, String tLocation)
+    public String createTender(int id, String name, String type, int price, String location)
             throws  SQLException {
 
         String result = "Tender creation failed";
 
-        PreparedStatement ps = this.con.prepareStatement("insert into tender values(?,?,?,?,?)");
+        PreparedStatement ps = this.con.prepareStatement("insert into Tender values(?,?,?,?,?)");
 
-        ps.setInt(1, tId);
-        ps.setString(2, tName);
-        ps.setString(3, tType);
-        ps.setInt(4, tPrice);
-        ps.setString(5, tLocation);
+        ps.setInt(1, id);
+        ps.setString(2, name);
+        ps.setString(3, type);
+        ps.setInt(4, price);
+        ps.setString(5, location);
 
         int x = ps.executeUpdate();
         if (x > 0) {
@@ -70,14 +70,14 @@ public class TenderDaoImpl implements TenderDao {
 
 
     @Override
-    public String assignTenderToVendor(int vendor_Id, int tender_Id) throws  SQLException {
+    public String assignTenderToVendor(int venId, int tenId) throws  SQLException {
         String result = "Invalid details provided!";
 
         PreparedStatement ps = this.con
-                .prepareStatement("update bidder set bStatus = 'selected' where vendor_id=? AND tender_id=?");
+                .prepareStatement("update Bidder set status = 'selected' where venId=? AND tenId=?");
 
-        ps.setInt(1, vendor_Id);
-        ps.setInt(2, tender_Id);
+        ps.setInt(1, venId);
+        ps.setInt(2, tenId);
 
         int x = ps.executeUpdate();
 

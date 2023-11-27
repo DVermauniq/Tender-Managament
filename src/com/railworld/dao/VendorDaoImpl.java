@@ -26,19 +26,18 @@ public class VendorDaoImpl  implements VendorDao{
 
         Vendor vendor = null;
 
-        PreparedStatement ps = this.con.prepareStatement("select * from vendor where vId=? ");
+        PreparedStatement ps = this.con.prepareStatement("select * from Vendor where id=? ");
 
         ps.setInt(1, id);
 
         ResultSet rs = ps.executeQuery();
 
         if (rs.next()) {
-           int i= rs.getInt("vId");
-            System.out.println(i);
-            String n = rs.getString("vName");
-            int m=rs.getInt("vMobile");
-            String e = rs.getString("vEmail");
-            String a = rs.getString("vAddress");
+           int i= rs.getInt("id");
+            String n = rs.getString("name");
+            int m=rs.getInt("mobile");
+            String e = rs.getString("email");
+            String a = rs.getString("address");
             String c=rs.getString("company");
 
 
@@ -50,17 +49,17 @@ public class VendorDaoImpl  implements VendorDao{
         return vendor;
     }
     @Override
-    public String registerVendor(int vId, String vName,int vMobile, String vEmail, String vAddress,String company)
+    public String registerVendor(int id, String name,int mobile, String email, String address,String company)
             throws  SQLException {
         String result = "Insertion failed!";
 
-        PreparedStatement ps = this.con.prepareStatement("insert into vendor values(?,?,?,?,?,?)");
+        PreparedStatement ps = this.con.prepareStatement("insert into Vendor values(?,?,?,?,?,?)");
 
-        ps.setInt(1, vId);
-        ps.setString(2, vName);
-        ps.setInt(3,vMobile);
-        ps.setString(4, vEmail);
-        ps.setString(5, vAddress);
+        ps.setInt(1, id);
+        ps.setString(2, name);
+        ps.setInt(3,mobile);
+        ps.setString(4, email);
+        ps.setString(5, address);
         ps.setString(6,company);
 
         int x = ps.executeUpdate();
@@ -76,16 +75,16 @@ public class VendorDaoImpl  implements VendorDao{
     public List<Vendor> viewAllVendor() throws VendorException, SQLException {
         List<Vendor> vendors = new ArrayList<>();
 
-        PreparedStatement ps = this.con.prepareStatement("select * from vendor");
+        PreparedStatement ps = this.con.prepareStatement("select * from Vendor");
 
         ResultSet rs = ps.executeQuery();
 
         while (rs.next()) {
-            int i = rs.getInt("vId");
-            String n = rs.getString("vName");
-            int m=rs.getInt("vMobile");
-            String e = rs.getString("vEmail");
-            String a = rs.getString("vAddress");
+            int i = rs.getInt("id");
+            String n = rs.getString("name");
+            int m=rs.getInt("mobile");
+            String e = rs.getString("email");
+            String a = rs.getString("address");
             String c=rs.getString("company");
 
             vendors.add(new Vendor(i, n, m, e, a,c));

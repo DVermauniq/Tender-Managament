@@ -20,14 +20,14 @@ public class AdminDaoImpl implements AdminDao{
     public Admin logInAdmin(int id, String password) throws SQLException, AdminException {
         Admin result = null;
 
-        PreparedStatement ps = this.con.prepareStatement("select * from admin where adminId=? AND adminPassword=?");
+        PreparedStatement ps = this.con.prepareStatement("select * from admin where userId=? AND password=?");
         ps.setInt(1, id);
         ps.setString(2, password);
         ResultSet rs = ps.executeQuery();
 
         if (rs.next()) {
-            String n = rs.getString("adminName");
-            String e = rs.getString("adminEmail");
+            String n = rs.getString("userName");
+            String e = rs.getString("userEmail");
             result = new Admin(n, e);
 
         } else {

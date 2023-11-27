@@ -22,13 +22,13 @@ public class BidderDaoImpl implements BidderDao{
     }
 
     @Override
-    public String placeBidAgainstTender(int venId, int tenId, int price) throws SQLException, TenderException {
+    public String placeBidAgainstTender(int id,int venId, int tenId, int price) throws SQLException, TenderException {
 
         String result = "Bidding failed!";
 
         this.master_id = venId;
 
-        PreparedStatement ps1 = this.con.prepareStatement("select * from tender where tenId=?");
+        PreparedStatement ps1 = this.con.prepareStatement("select * from Tender where id=?");
 
         ps1.setInt(1, tenId);
 
@@ -36,11 +36,12 @@ public class BidderDaoImpl implements BidderDao{
 
         if (rs.next()) {
 
-            PreparedStatement ps2 = this.con.prepareStatement("insert into bidder(vendor_Id, tender_Id, bPrice) values(?,?,?)");
+            PreparedStatement ps2 = this.con.prepareStatement("insert into Bidder(id,venId, tenId, price) values(?,?,?,?)");
 
-            ps2.setInt(1, master_id);
-            ps2.setInt(2, tenId);
-            ps2.setInt(3, price);
+            ps2.setInt(1,id);
+            ps2.setInt(2, master_id);
+            ps2.setInt(3, tenId);
+            ps2.setInt(4, price);
 
             int x = ps2.executeUpdate();
 
@@ -58,7 +59,7 @@ public class BidderDaoImpl implements BidderDao{
     public Bidder viewStatusOfBid(int id) throws BidderException, SQLException {
         Bidder bidder = null;
 
-        PreparedStatement ps = this.con.prepareStatement("select * from bidder where id=?");
+        PreparedStatement ps = this.con.prepareStatement("select * from Bidder where id=?");
 
         ps.setInt(1, id);
 
@@ -66,10 +67,10 @@ public class BidderDaoImpl implements BidderDao{
 
         if (rs.next()) {
             int i = rs.getInt("id");
-            int vi = rs.getInt("vendor_Id");
-            int ti = rs.getInt("tender_Id");
-            int p = rs.getInt("bPrice");
-            String s = rs.getString("bStatus");
+            int vi = rs.getInt("venId");
+            int ti = rs.getInt("tenId");
+            int p = rs.getInt("price");
+            String s = rs.getString("status");
 
             bidder = new Bidder(i, vi, ti, p, s);
         } else {
@@ -83,7 +84,7 @@ public class BidderDaoImpl implements BidderDao{
     public List<Bidder> viewOwnBidHistory() throws BidderException, SQLException {
         List<Bidder> bidders = new ArrayList<>();
 
-        PreparedStatement ps = this.con.prepareStatement("select * from bidder where vendor_Id=?");
+        PreparedStatement ps = this.con.prepareStatement("select * from Bidder where venId=?");
 
         ps.setInt(1, master_id);
 
@@ -93,8 +94,8 @@ public class BidderDaoImpl implements BidderDao{
             int i = rs.getInt("id");
             int vi = rs.getInt("venId");
             int ti = rs.getInt("tenId");
-            int p = rs.getInt("bPrice");
-            String s = rs.getString("bStatus");
+            int p = rs.getInt("price");
+            String s = rs.getString("status");
 
             bidders.add(new Bidder(i, vi, ti, p, s));
         }
@@ -109,7 +110,7 @@ public class BidderDaoImpl implements BidderDao{
     public List<Bidder> viewAllBidsOfTender(int tid) throws BidderException, SQLException {
         List<Bidder> bidders = new ArrayList<>();
 
-        PreparedStatement ps = this.con.prepareStatement("select * from bidder where tender_id=?");
+        PreparedStatement ps = this.con.prepareStatement("select * from Bidder where tenId=?");
 
         ps.setInt(1, tid);
 
@@ -117,10 +118,10 @@ public class BidderDaoImpl implements BidderDao{
 
         while (rs.next()) {
             int i = rs.getInt("id");
-            int vi = rs.getInt("vendor_id");
-            int ti = rs.getInt("tender_id");
-            int p = rs.getInt("bPrice");
-            String s = rs.getString("bStatus");
+            int vi = rs.getInt("venId");
+            int ti = rs.getInt("tenId");
+            int p = rs.getInt("price");
+            String s = rs.getString("status");
 
             bidders.add(new Bidder(i, vi, ti, p, s));
         }
