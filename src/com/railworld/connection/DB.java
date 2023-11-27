@@ -1,9 +1,7 @@
 package com.railworld.connection;
 
-import java.sql.*;
-import java.sql.DriverManager;
-
-import static java.lang.Class.forName;
+import java.sql.Connection;
+import java.sql.SQLException;
 
 public class DB {
 
@@ -25,8 +23,8 @@ public class DB {
 
 
         try {
-            con =DriverManager.getConnection(url, user, password);
-        } catch (SQLException e) {
+  
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
